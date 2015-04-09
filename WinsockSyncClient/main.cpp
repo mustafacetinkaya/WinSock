@@ -82,12 +82,13 @@ std::thread connectThread (connectSv, Socket, SockAddr );
 	return 0;
 	*/
 	Cetinkaya::WinSock winSock;
-	for (;;){
+
 		//winSock.send_msg();
 		std::cout << "Turn" << std::endl;
-		winSock.send_msg();
-		winSock.receive_msg();
-	}
+		//winSock.send_msg();
+		//winSock.receive_msg();
+		winSock.append_command(command_type::BROADCAST_MODE_REPORT);
+	
 	return 0;
 
 }

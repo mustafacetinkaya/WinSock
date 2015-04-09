@@ -26,5 +26,8 @@
     <ClInclude Include="WinSock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TypeDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

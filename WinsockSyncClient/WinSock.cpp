@@ -2,7 +2,7 @@
 
 namespace Cetinkaya{
 
-	WinSock::WinSock() {
+	WinSock::WinSock() : connected (false){
 		// Initialise Winsock
 		if (WSAStartup(MAKEWORD(2, 2), &WsaDat) != 0)
 		{
@@ -41,8 +41,9 @@ namespace Cetinkaya{
 			system("PAUSE");
 		}
 		else
+		{
 			connected = true;
-		char buffer_tx[20] = { 'a' };
+		}
 	}
 
 	WinSock::~WinSock()
@@ -73,6 +74,7 @@ namespace Cetinkaya{
 	} */
 
 	void Cetinkaya::WinSock::send_msg(){
+		strcpy_s(buffer_tx, "test");
 		if (send(WinSock::Socket, WinSock::buffer_tx, sizeof( WinSock::buffer_tx ), 0) == SOCKET_ERROR){
 			std::cout << "Socket error!" << std::endl;
 			/* !! HANDLE */
@@ -91,16 +93,36 @@ namespace Cetinkaya{
 			std::cout << "Socket error!";
 		}
 
-		else
-		std::cout << WinSock::buffer_rx << std::endl;
+		else{
+			std::cout << WinSock::buffer_rx << std::endl;
+			handle_msg();
+		}
 
 	}
 
-	bool Cetinkaya::WinSock::isConnected(){
+	bool Cetinkaya::WinSock::is_connected(){
 		return connected;
 	}
 	
 	void Cetinkaya::WinSock::handle_msg(){
+		switch (buffer_rx[0]){
+		case 'P':
+			std::cout << "PSU Msg Received";
+			//WinSock::PSU_rx_handler();
+			break;
+		case 'S':
+			std::cout << "SNP Msg Received";
+			//WinSock::SNP_rx_handler();
+			break;
+		case 'M':
+			std::cout << "MCU Msg Received";
+			//WinSock::MCU_rx_handler();
+			break;
+		}
 
+	}
+
+	void Cetinkaya::WinSock::append_command(command_type command){
+		data_packet.data[0] = (byte)command;
 	}
 }
