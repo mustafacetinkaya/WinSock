@@ -24,6 +24,7 @@ namespace Cetinkaya {
 		void SNP_tx_handler();
 		void MCU_tx_handler();
 		void append_command(command_type command);
+		void begin_loop();
 
 	private:
 		SOCKET Socket;

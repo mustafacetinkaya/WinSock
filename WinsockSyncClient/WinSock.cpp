@@ -125,4 +125,9 @@ namespace Cetinkaya{
 	void Cetinkaya::WinSock::append_command(command_type command){
 		data_packet.data[0] = (byte)command;
 	}
+	
+	void Cetinkaya::WinSock::begin_loop() {
+		receive_msg();
+		send_msg();
+	}
 }
