@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>
-#include <winsock2.h>
-#include <string>
 #include "TypeDefs.h"
+
+
 
 #define BUF_LEN 64		// Rx & Tx buffers
 #define FIXED_SIZE 5	// Fixed part of the data packet; excluding checksum

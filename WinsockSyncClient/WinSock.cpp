@@ -156,7 +156,7 @@ namespace Cetinkaya{
 		else{
 			std::cout << WinSock::buffer_rx << std::endl;
 			if ( handle_msg() == -1)
-				cout << "Packet could not be read!\r\n";
+				std::cout << "Packet could not be read!\r\n";
 		}
 
 	}
@@ -224,7 +224,7 @@ namespace Cetinkaya{
 	void Cetinkaya::WinSock::prepare_packet(enum_header header,
 												enum_command_type command_type,
 													int command_data){
-		cout << "Type: " << endl; cout << command_type << endl;
+		std::cout << "Type: " << std::endl; std::cout << command_type << std::endl;
 		packet data_packet;
 		int package_size = 0;	// ( FIXED_SIZE = 5 ) + data_size + ( checksum = 2 )
 
@@ -249,7 +249,7 @@ namespace Cetinkaya{
 			case IMU_DATA:
 				break;
 			default:
-				cout << "SNP command not defined!" << endl;
+				std::cout << "SNP command not defined!" << std::endl;
 				return;
 			}
 			break; // end of snp
@@ -348,7 +348,7 @@ namespace Cetinkaya{
 
 
 
-		 WinSock::send_msg( data_packet.data_size );
+		 WinSock::send_msg( package_size );
 		 new_command = TRUE;	// let the thread know
 		 delete[] buffer_tx;
 

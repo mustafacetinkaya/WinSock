@@ -24,12 +24,21 @@
     <ClCompile Include="TypeDefs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tinythread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinSock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TypeDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tinythread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fast_mutex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

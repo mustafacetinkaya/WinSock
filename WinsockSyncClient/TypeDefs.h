@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <winsock2.h>
-#include <thread>
-#include "relations_class.h"
+#include "tinythread.h"
+
 typedef unsigned char byte;
 
 

@@ -79,10 +79,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tinythread.cpp" />
     <ClCompile Include="TypeDefs.cpp" />
     <ClCompile Include="WinSock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fast_mutex.h" />
+    <ClInclude Include="tinythread.h" />
     <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="WinSock.h" />
   </ItemGroup>
