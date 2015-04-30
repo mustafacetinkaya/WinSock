@@ -1,85 +1,59 @@
 #pragma once
+#include <iostream>
+#include <winsock2.h>
+#include <thread>
+#include "relations_class.h"
+typedef unsigned char byte;
 
-struct packet {
-	char header[3];
-	byte packet_type;
-	size_t data_size;
-	byte data[10];
-	char checksum[2];
+
+/* packet = 3 + 1 + 1 + [data_size] + 2  = 7 + [data_size]
+/
+/  3 bytes for the start sequence,
+/		1 byte for type,
+/			1 byte for data length,
+/				data_size bytes for packet data,
+/					 2 bytes for the checksum.
+*/
+
+enum enum_header {
+	psu_header = 1,
+	snp_header,
+	mcu_header,
+	spu_header
 };
 
-enum class command_type : byte {
+#pragma pack(push, 1)	// Packed: 1 Byte
 
-	// TX data
-	SET_ACTIVE_CHANNELS		= 0x80,
-	SET_SILENT_MODE			= 0x81,
-	SET_BROADCAST_MODE		= 0x82,
-	SET_GYRO_BIAS			= 0x83,
-	SET_ACCEL_BIAS			= 0x84,
-	SET_ACCEL_REF_VECTOR	= 0x85,
-	AUTO_SET_ACCEL_REF		= 0x86,
-	ZERO_RATE_GYROS			= 0x87,
-	SELF_TEST				= 0x88,
-	SET_START_CAL			= 0x89,
-	SET_PROCESS_COVARIANCE	= 0x8A,
-	SET_MAG_COVARIANCE		= 0x8B,
-	SET_ACCEL_COVARIANCE	= 0x8C,
-	SET_EKF_CONFIG			= 0x8D,
-	SET_GYRO_ALIGNMENT		= 0x8E,
-	SET_ACCEL_ALIGNMENT		= 0x8F,
-	SET_MAG_REF_VECTOR		= 0x90,
-	AUTO_SET_MAG_REF		= 0x91,
-	SET_MAG_CAL				= 0x92,
-	SET_MAG_BIAS			= 0x93,
-	SET_GYRO_SCALE			= 0x94,
-	EKF_RESET				= 0x95,
-	RESET_TO_FACTORY		= 0x96,
+struct packet {
+	byte header[3];		// MCU - PSU - SNP - SPU
+	byte packet_type;	// Type of command
+	byte data_size;		// 
+	byte *data;
+	byte checksum[2];
+};
 
-	WRITE_TO_FLASH			= 0xA0,
+#pragma pack(pop)		// End of pack
 
-	GET_DATA				= 0x01,
-	GET_ACTIVE_CHANNELS		= 0x02,
-	GET_BROADCAST_MODE		= 0x03,
-	GET_ACCEL_BIAS			= 0x04,
-	GET_ACCEL_REF_VECTOR	= 0x05,
-	GET_GYRO_BIAS			= 0x06,
-	GET_GYRO_SCALE			= 0x07,
-	GET_START_CAL			= 0x08,
-	GET_EKF_CONFIG			= 0x09,
-	GET_ACCEL_COVARIANCE	= 0x0A,
-	GET_MAG_COVARIANCE		= 0x0B,
-	GET_PROCESS_COVARIANCE	= 0x0C,
-	GET_STATE_COVARIANCE	= 0x0D,
-	GET_GYRO_ALIGNMENT		= 0x0E,
-	GET_ACCEL_ALIGNMENT		= 0x0F,
-	GET_MAG_REF_VECTOR		= 0x10,
-	GET_MAG_CAL				= 0x11,
-	GET_MAG_BIAS			= 0x12,
+enum enum_packet_for {
+	psu = 1,
+	snp,
+	mcu,
+	spu,
+	undefined
+};
 
-	// RX data
-	COMMAND_COMPLETE			= 0xB0,
-	COMMAND_FAILED				= 0xB1,
-	BAD_CHECKSUM				= 0xB2,
-	BAD_DATA_LENGTH				= 0xB3,
-	UNRECOGNIZED_PACKET			= 0xB4,
-	BUFFER_OVERFLOW				= 0xB5,
-	STATUS_REPORT				= 0xB6,
-	SENSOR_DATA					= 0xB7,
-	GYRO_BIAS_REPORT			= 0xB8,
-	GYRO_SCALE_REPORT			= 0xB9,
-	START_CAL_REPORT			= 0xBA,
-	ACCEL_BIAS_REPORT			= 0xBB,
-	ACCEL_REF_VECTOR_REPORT		= 0xBC,
-	ACTIVE_CHANNEL_REPORT		= 0xBD,
-	ACCEL_COVARIANCE_REPORT		= 0xBE,
-	MAG_COVARIANCE_REPORT		= 0xBF,
-	PROCESS_COVARIANCE_REPORT	= 0xC0,
-	STATE_COVARIANCE_REPORT		= 0xC1,
-	EKF_CONFIG_REPORT			= 0xC2,
-	GYRO_ALIGNMENT_REPORT		= 0xC3,
-	ACCEL_ALIGNMENT_REPORT		= 0xC4,
-	MAG_REF_VECTOR_REPORT		= 0xC5,
-	MAG_CAL_REPORT				= 0xC6,
-	MAG_BIAS_REPORT				= 0xC7,
-	BROADCAST_MODE_REPORT		= 0xC8
+enum enum_command_type {
+
+	/* MCU Commands */
+	SET_POINT_X = 65,
+	SET_POINT_Y,
+	SET_POINT_Z,
+	SET_POINT_ROLL,
+	SET_POINT_PITCH,
+	SET_POINT_YAW,
+	STOP_ALL, 
+
+	/* SPU Commands */
+	GET_IMU_DATA = 60,
+	IMU_DATA = 63
 };

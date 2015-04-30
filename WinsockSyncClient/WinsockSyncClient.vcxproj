@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TypeDefs.cpp" />
     <ClCompile Include="WinSock.cpp" />
   </ItemGroup>
   <ItemGroup>
